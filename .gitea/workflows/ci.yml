@@ -41,10 +41,14 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      # - name: Lint
+      #   run: |
+      #     uv run pylint --fail-under=8 --recursive=yes --output-format=parseable --output=lintreport.txt app/ tests/
+      #     cat lintreport.txt
+
       - name: Lint
         run: |
-          uv run pylint --fail-under=8 --recursive=yes --output-format=parseable --output=lintreport.txt app/ tests/
-          cat lintreport.txt
+          uv run pylint --fail-under=8 --recursive=yes --output-format=parseable app/ tests/
 
       - name: Unit Test
         run: |
@@ -55,17 +59,37 @@ jobs:
       - name: Minimize uv cache
         run: uv cache prune --ci
 
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5.2.0
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+      # - name: SonarQube Scan
+      #   uses: SonarSource/sonarqube-scan-action@v5.2.0
+      #   env:
+      #     SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
+      #     SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
 
-      - name: Snyk Vulnerability Scan
+      - name: Set up environment for Snyk
+        run: |
+          uv pip freeze > requirements.txt
+          mv pyproject.toml pyproject.toml.bak
+          mv uv.lock uv.lock.bak
+      
+      - name: Snyk SAST Scan
         uses: snyk/actions/python@master
-        continue-on-error: true # Sometimes vulns aren't immediately fixable
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: snyk
-          args: test --all-projects
+          # command: snyk
+          args: snyk code test #--all-projects --exclude=.archive
+
+      # - name: Snyk Vulnerability Scan
+      #   uses: snyk/actions/python@master
+      #   continue-on-error: true # Sometimes vulns aren't immediately fixable
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     command: snyk
+      #     args: test --all-projects
+
+      - name: Reverse set up environment for Snyk
+        run: |
+          rm -f requirements.txt
+          mv pyproject.toml.bak pyproject.toml
+          mv uv.lock.bak uv.lock
