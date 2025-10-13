@@ -15,7 +15,7 @@ dependencies = [
 dev = [
     "black<25.9.1,>=25.9.0",
     "coverage<8.0.0,>=7.6.10",
-    "pylint<4.0.0,>=3.3.3",
+    "pylint<4.1.0,>=4.0.0",
     "pylint-exit<2.0.0,>=1.2.0",
     "pytest<9.0.0,>=8.3.4",
 ]
