@@ -1,19 +1,16 @@
 {
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
   "platformCommit": "enabled",
   "dependencyDashboardAutoclose": true,
   "assignAutomerge": false,
   "assigneesFromCodeOwners": false,
   "rebaseWhen": "behind-base-branch",
   "rollbackPrs": true,
-  "labels": [
-    "dependencies"
-  ],
-  "ignorePaths": [
-    "**/.archive/**"
-  ],
+  "semanticCommits": "enabled",
+  "semanticCommitScope": "deps",
+  "semanticCommitType": "feat",
+  "labels": ["dependencies"],
+  "ignorePaths": ["**/.archive/**"],
   "packageRules": [
     {
       "labels": [
