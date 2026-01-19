@@ -29,6 +29,14 @@
         "/coverage/",
         "/pytest/"
       ]
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
     }
   ],
   "vulnerabilityAlerts": {
