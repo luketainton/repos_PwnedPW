@@ -39,11 +39,11 @@
       "automerge": true
     }
   ],
+  "osvVulnerabilityAlerts": true,
+  "dependencyDashboardOSVVulnerabilitySummary": "all",
   "vulnerabilityAlerts": {
     "enabled": true,
-    "labels": [
-      "security"
-    ],
+    "labels": ["security"],
     "commitMessagePrefix": "[SECURITY] ",
     "prCreation": "immediate"
   }
