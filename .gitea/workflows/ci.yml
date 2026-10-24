@@ -15,7 +15,9 @@ jobs:
     uses: actions/gha-workflows/.gitea/workflows/ci-python-unified.yml@main
     with:
       package-manager: uv
-      python-version: '3.14'
+      python-version: '3.15'
       docker-enabled: true
-      sonarqube: false
+      sonarqube: true
       security-scan: true
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
